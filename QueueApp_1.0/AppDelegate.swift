@@ -8,15 +8,32 @@
 
 import UIKit
 import CoreData
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+
+        FirebaseApp.configure()
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        window?.rootViewController = MainTabBarController()
+        // Get rid of the black shadow under Nav Bar.
+        UINavigationBar.appearance().barTintColor = UIColor.white
+
+        UINavigationBar.appearance().shadowImage = UIImage()
+        UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        
+//        let statusBarBackgroundView = UIView()
+//        statusBarBackgroundView.backgroundColor = .white
+//        window?.addSubview(statusBarBackgroundView)
+//        
+//        window?.addConstraintsWithFormat(format: "H:|[v0]|", views: statusBarBackgroundView)
+//        window?.addConstraintsWithFormat(format: "V:|[v0(20)]", views: statusBarBackgroundView)
+
         return true
     }
 
