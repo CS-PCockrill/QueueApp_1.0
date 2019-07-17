@@ -20,6 +20,12 @@ class CurrentLocationCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    let iconImageView: UIImageView = {
+        let imageSrc = UIImage(named: "clock_icon")?.withRenderingMode(.alwaysOriginal)
+        let image = UIImageView(image: imageSrc)
+        return image
+    }()
+    
     let dividerLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.lightGray
@@ -27,7 +33,12 @@ class CurrentLocationCell: UICollectionViewCell {
     }()
     
     private func setupViews() {
+        addSubview(iconImageView)
         addSubview(dividerLineView)
+        
+        iconImageView.anchor(top: nil, left: leftAnchor, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 15, paddingBottom: 0, paddingRight: 0, width: 25, height: 25)
+        iconImageView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        
         dividerLineView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 15, paddingBottom: 0, paddingRight: 15, width: 0, height: 0.5)
     }
     
