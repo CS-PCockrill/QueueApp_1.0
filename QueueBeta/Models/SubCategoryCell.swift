@@ -10,6 +10,7 @@ import UIKit
 
 class SubCategoryCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     let cellId = "cellId"
+
     
     //    let categories = ["Home": ["Tools", "Furniture", "Appliances", "Household"], "Entertainment": ["Bags & Luggage", "Men's Clothing & Shoes", "Women's Clothing & Shoes"], "Electronics": ["Mobile Phones", "Electronics & Computers"], "Hobbies": ["Sports & Outdoors", "Musical Instruments", "Auto Parts", "Bicycles"]]
     
@@ -29,6 +30,7 @@ class SubCategoryCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout,
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Selecting sub category")
+        
         //        guard let key = nameLabel.text else { return }
         //        let item = categories.categories.values
         //        print(item)

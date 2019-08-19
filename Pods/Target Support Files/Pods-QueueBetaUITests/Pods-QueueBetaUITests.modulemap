@@ -1,0 +1,6 @@
+framework module Pods_QueueBetaUITests {
+  umbrella header "Pods-QueueBetaUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

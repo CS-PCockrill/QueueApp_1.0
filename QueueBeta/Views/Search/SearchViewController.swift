@@ -10,26 +10,18 @@ import UIKit
 
 class SearchViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     let cellId = "cellId"
-    let categories = ["Local", "Recents", "Vehicles"]
     
     lazy var searchBar: UISearchBar = {
         let sb = UISearchBar()
-        sb.placeholder = "Search Queue"
-        sb.barTintColor = UIColor.gray
+        sb.placeholder = "Search"
+        sb.barTintColor = UIColor.white
         //        sb.layer.cornerRadius = 50
         //        sb.layer.masksToBounds = true
-        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.rgb(red: 236, green: 236, blue: 239)
+        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.white
         sb.delegate = self
         sb.autocapitalizationType = .none
         return sb
     }()
-    
-    //    let sectionLabel: UILabel = {
-    //        let sl = UILabel()
-    //        sl.text = "Recents"
-    //        sl.font = UIFont.boldSystemFont(ofSize: 17)
-    //        return sl
-    //    }()
     
     let dividerLineView: UIView = {
         let dl = UIView()
@@ -79,6 +71,10 @@ class SearchViewController: UICollectionViewController, UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Locating item...")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 8, left: 0, bottom: 0, right: 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
