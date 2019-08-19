@@ -55,7 +55,7 @@ class ItemsHorizontalController: BaseListController, UICollectionViewDelegateFlo
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (view.frame.width) - 48, height: view.frame.height)
+        return CGSize(width: 250, height: view.frame.height)
     }
 }
 

@@ -25,17 +25,22 @@ class DetailCategoryController: UICollectionViewController, UISearchBarDelegate,
         //        collectionView.register(SearchHeader.self, forCellWithReuseIdentifier: "headerId")
         collectionView.backgroundColor = .white
         collectionView.alwaysBounceVertical = true
-        
+        collectionView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         setupSearchBar()
         
         collectionView?.register(SearchHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
         collectionView.register(DetailItemCell.self, forCellWithReuseIdentifier: cellId)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleDismiss))
+    }
+    
+    @objc func handleDismiss() {
+        dismiss(animated: true, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let width = view.frame.width
-        return CGSize(width: width, height: 100)
+        return CGSize(width: width, height: 92)
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -45,11 +50,19 @@ class DetailCategoryController: UICollectionViewController, UISearchBarDelegate,
         return header
     }
     
+    let navSearchHeader: NavSearchHeader = {
+        let header = NavSearchHeader()
+        
+        return header
+    }()
+    
     func setupSearchBar() {
-        let searchBar = UISearchBar()
-        let searchBarContainer = SearchBarContainerView(customSearchBar: searchBar)
-        searchBarContainer.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 44)
-        navigationItem.titleView = searchBarContainer
+    
+        
+        let whiteView = UIView()
+        whiteView.backgroundColor = .white
+        view.addSubview(whiteView)
+        whiteView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 10)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

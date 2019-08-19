@@ -101,7 +101,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     }()
     
     fileprivate func setupNavigationBar() {
-        navigationController?.navigationBar.addSubview(navSearchHeader)
+        self.navigationController?.navigationBar.addSubview(navSearchHeader)
         navigationController?.view.addConstraintsWithFormat(format: "H:|-10-[v0]-10-|", views: navSearchHeader)
         navigationController?.view.addConstraintsWithFormat(format: "V:|[v0(50)]", views: navSearchHeader)
 //        navSearchHeader.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 10))
@@ -152,7 +152,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         let categoryDetailController = DetailCategoryController(collectionViewLayout: layout)
         categoryDetailController.category = category
         //        categoryDetailController.categoryNames = category
-        navigationController?.pushViewController(categoryDetailController, animated: true)
+        present(categoryDetailController, animated: true, completion: nil)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

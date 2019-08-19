@@ -176,8 +176,13 @@ extension UIImageView {
 }
 
 extension UIButton {
-    convenience init(title: String) {
+    convenience init(title: String, textColor: UIColor, backgroundColor: UIColor, cornerRadius: CGFloat) {
         self.init(type: .system)
+        self.clipsToBounds = true
+        self.layer.cornerRadius = cornerRadius
         self.setTitle(title, for: .normal)
+        self.setTitleColor(textColor, for: .normal)
+        self.backgroundColor = backgroundColor
+        
     }
 }

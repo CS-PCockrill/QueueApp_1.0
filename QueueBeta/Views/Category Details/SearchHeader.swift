@@ -82,7 +82,7 @@ class SearchHeader: UICollectionViewCell {
         addressView.addGestureRecognizer(addressGesture)
         addSubview(addressView)
         
-        addressView.anchor(top: categoryName.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 14, paddingBottom: 0, paddingRight: 0, width: 0, height: 40)
+        addressView.anchor(top: categoryName.bottomAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 14, paddingBottom: 0, paddingRight: 0, width: 0, height: 32)
         addressView.addSubview(addressLabel)
         addressLabel.anchor(top: addressView.topAnchor, left: addressView.leftAnchor, bottom: addressView.bottomAnchor, right: addressView.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0)
         
@@ -96,7 +96,7 @@ class SearchHeader: UICollectionViewCell {
         filterView.addGestureRecognizer(filterGesture)
         addSubview(filterView)
         
-        filterView.anchor(top: categoryName.bottomAnchor, left: addressView.rightAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 70, height: 40)
+        filterView.anchor(top: categoryName.bottomAnchor, left: addressView.rightAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 70, height: 32)
         filterView.addSubview(filterLabel)
         filterLabel.anchor(top: filterView.topAnchor, left: filterView.leftAnchor, bottom: filterView.bottomAnchor, right: filterView.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0)
         
@@ -110,7 +110,7 @@ class SearchHeader: UICollectionViewCell {
         sortView.addGestureRecognizer(sortGesture)
         addSubview(sortView)
         
-        sortView.anchor(top: categoryName.bottomAnchor, left: filterView.rightAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 60, height: 40)
+        sortView.anchor(top: categoryName.bottomAnchor, left: filterView.rightAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 60, height: 32)
         sortView.addSubview(sortLabel)
         sortLabel.anchor(top: sortView.topAnchor, left: sortView.leftAnchor, bottom: sortView.bottomAnchor, right: sortView.rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: 0, height: 0)
     }
@@ -128,8 +128,9 @@ class SearchHeader: UICollectionViewCell {
     }
     
     @objc func handleAddress() {
-        //        delegate?.presentViewController()
-        let navController = UINavigationController(rootViewController: SetLocationController())
+        let layout = UICollectionViewFlowLayout()
+        let setLocationController = SetLocationController(collectionViewLayout: layout)
+        let navController = UINavigationController(rootViewController: setLocationController)
         self.window?.rootViewController?.present(navController, animated: true, completion: nil)
         //        (superview?.next as? UIViewController)?.navigationController?.pushViewController(UIViewController(), animated: true)
     }

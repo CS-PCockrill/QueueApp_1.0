@@ -52,6 +52,10 @@
 		E92DEB1722F8BD7D0075578A /* DetailCategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DEB1622F8BD7D0075578A /* DetailCategoryController.swift */; };
 		E92DEB1922F8BDB00075578A /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DEB1822F8BDB00075578A /* Item.swift */; };
 		E9D0ADC2230984BE0050A597 /* NavSearchHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D0ADC1230984BE0050A597 /* NavSearchHeader.swift */; };
+		E9D0ADC4230AD57A0050A597 /* MapViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D0ADC3230AD57A0050A597 /* MapViewHeader.swift */; };
+		E9D0ADC6230ADF970050A597 /* ApplyLocationFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D0ADC5230ADF970050A597 /* ApplyLocationFooter.swift */; };
+		E9D0ADC8230AE04D0050A597 /* CustomRadiusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D0ADC7230AE04D0050A597 /* CustomRadiusCell.swift */; };
+		E9D0ADCA230AE5550050A597 /* SuggestedRadiusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D0ADC9230AE5550050A597 /* SuggestedRadiusCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -126,6 +130,10 @@
 		E92DEB1622F8BD7D0075578A /* DetailCategoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCategoryController.swift; sourceTree = "<group>"; };
 		E92DEB1822F8BDB00075578A /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E9D0ADC1230984BE0050A597 /* NavSearchHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavSearchHeader.swift; sourceTree = "<group>"; };
+		E9D0ADC3230AD57A0050A597 /* MapViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewHeader.swift; sourceTree = "<group>"; };
+		E9D0ADC5230ADF970050A597 /* ApplyLocationFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyLocationFooter.swift; sourceTree = "<group>"; };
+		E9D0ADC7230AE04D0050A597 /* CustomRadiusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRadiusCell.swift; sourceTree = "<group>"; };
+		E9D0ADC9230AE5550050A597 /* SuggestedRadiusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedRadiusCell.swift; sourceTree = "<group>"; };
 		EFF56BBEF051E3A741A461DC /* Pods-QueueBetaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QueueBetaTests.release.xcconfig"; path = "Target Support Files/Pods-QueueBetaTests/Pods-QueueBetaTests.release.xcconfig"; sourceTree = "<group>"; };
 		F29EB6A43355A4030D97769A /* Pods_QueueBetaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QueueBetaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2E3DCF46B181787E41A0D7 /* Pods-QueueBeta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QueueBeta.debug.xcconfig"; path = "Target Support Files/Pods-QueueBeta/Pods-QueueBeta.debug.xcconfig"; sourceTree = "<group>"; };
@@ -361,6 +369,10 @@
 				E91D755D22F8C5DD00C2D860 /* Search */,
 				E92DEB1E22F8BE2F0075578A /* User Registration */,
 				E91D755522F8C4B300C2D860 /* SetLocationController.swift */,
+				E9D0ADC7230AE04D0050A597 /* CustomRadiusCell.swift */,
+				E9D0ADC9230AE5550050A597 /* SuggestedRadiusCell.swift */,
+				E9D0ADC5230ADF970050A597 /* ApplyLocationFooter.swift */,
+				E9D0ADC3230AD57A0050A597 /* MapViewHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -612,9 +624,12 @@
 				E92DEB1922F8BDB00075578A /* Item.swift in Sources */,
 				E91D757F23049A0C00C2D860 /* ItemCategoriesHeaderController.swift in Sources */,
 				E92DEB1122F8BCA50075578A /* Extensions.swift in Sources */,
+				E9D0ADC6230ADF970050A597 /* ApplyLocationFooter.swift in Sources */,
 				E92DEB0A22F8BC180075578A /* SignInController.swift in Sources */,
 				E90BDA6B2304A57F00285245 /* AppGroup.swift in Sources */,
 				E91D757B23048F3C00C2D860 /* BaseListController.swift in Sources */,
+				E9D0ADC4230AD57A0050A597 /* MapViewHeader.swift in Sources */,
+				E9D0ADCA230AE5550050A597 /* SuggestedRadiusCell.swift in Sources */,
 				E91D754A22F8C2E600C2D860 /* ItemImageCell.swift in Sources */,
 				E91D757D2304984D00C2D860 /* CategoriesHeader.swift in Sources */,
 				E90BDA6D23081B4F00285245 /* CompactCategoryCell.swift in Sources */,
@@ -625,6 +640,7 @@
 				E91D756622F8C67D00C2D860 /* CurrentLocationCell.swift in Sources */,
 				E91D756B22F8C6EE00C2D860 /* DetailedItemController.swift in Sources */,
 				E92DEB1322F8BD530075578A /* CategoryCell.swift in Sources */,
+				E9D0ADC8230AE04D0050A597 /* CustomRadiusCell.swift in Sources */,
 				E91D754E22F8C37600C2D860 /* CategoriesLauncher.swift in Sources */,
 				E92DEB0E22F8BC550075578A /* UserProfileController.swift in Sources */,
 				E91D755422F8C47000C2D860 /* SearchHeader.swift in Sources */,
