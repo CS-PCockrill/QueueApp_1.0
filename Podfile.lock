@@ -1,22 +1,35 @@
 PODS:
+  - GoogleMaps (3.1.0):
+    - GoogleMaps/Maps (= 3.1.0)
+  - GoogleMaps/Base (3.1.0)
+  - GoogleMaps/Maps (3.1.0):
+    - GoogleMaps/Base
+  - GooglePlaces (3.1.0):
+    - GoogleMaps/Base (= 3.1.0)
   - PullToDismiss (2.2)
   - SDWebImage (5.0.6):
     - SDWebImage/Core (= 5.0.6)
   - SDWebImage/Core (5.0.6)
 
 DEPENDENCIES:
+  - GoogleMaps
+  - GooglePlaces
   - PullToDismiss (~> 2.2)
   - SDWebImage
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - GoogleMaps
+    - GooglePlaces
     - PullToDismiss
     - SDWebImage
 
 SPEC CHECKSUMS:
+  GoogleMaps: 5c13302e6fe6bb6e686b267196586b91cd594225
+  GooglePlaces: e874db179f2675c4f3eeda0b686b540273a578b0
   PullToDismiss: 033572b7152fbf68db0407db882d546312813837
   SDWebImage: 920f1a2ff1ca8296ad34f6e0510a1ef1d70ac965
 
-PODFILE CHECKSUM: 3af80111ecfdc40c7f42d587b457df6a727d1c0e
+PODFILE CHECKSUM: 5af8bea0ecfcef3543e764871ede978ebed74b2a
 
 COCOAPODS: 1.7.2

@@ -56,6 +56,7 @@
 		E9D0ADC6230ADF970050A597 /* ApplyLocationFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D0ADC5230ADF970050A597 /* ApplyLocationFooter.swift */; };
 		E9D0ADC8230AE04D0050A597 /* CustomRadiusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D0ADC7230AE04D0050A597 /* CustomRadiusCell.swift */; };
 		E9D0ADCA230AE5550050A597 /* SuggestedRadiusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D0ADC9230AE5550050A597 /* SuggestedRadiusCell.swift */; };
+		E9D0ADCC230B19620050A597 /* OffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D0ADCB230B19620050A597 /* OffersViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -134,6 +135,7 @@
 		E9D0ADC5230ADF970050A597 /* ApplyLocationFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyLocationFooter.swift; sourceTree = "<group>"; };
 		E9D0ADC7230AE04D0050A597 /* CustomRadiusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRadiusCell.swift; sourceTree = "<group>"; };
 		E9D0ADC9230AE5550050A597 /* SuggestedRadiusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedRadiusCell.swift; sourceTree = "<group>"; };
+		E9D0ADCB230B19620050A597 /* OffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersViewController.swift; sourceTree = "<group>"; };
 		EFF56BBEF051E3A741A461DC /* Pods-QueueBetaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QueueBetaTests.release.xcconfig"; path = "Target Support Files/Pods-QueueBetaTests/Pods-QueueBetaTests.release.xcconfig"; sourceTree = "<group>"; };
 		F29EB6A43355A4030D97769A /* Pods_QueueBetaUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_QueueBetaUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FD2E3DCF46B181787E41A0D7 /* Pods-QueueBeta.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-QueueBeta.debug.xcconfig"; path = "Target Support Files/Pods-QueueBeta/Pods-QueueBeta.debug.xcconfig"; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				E92DEB0522F8BBEE0075578A /* MainTabBarController.swift */,
 				E91D757E23049A0C00C2D860 /* ItemCategoriesHeaderController.swift */,
 				E9D0ADC1230984BE0050A597 /* NavSearchHeader.swift */,
+				E9D0ADCB230B19620050A597 /* OffersViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				E92DEAC822F8BAFB0075578A /* Frameworks */,
 				E92DEAC922F8BAFB0075578A /* Resources */,
 				48D66DE432118380BC0B0FA8 /* [CP] Embed Pods Frameworks */,
+				747A7B408E1EB9C13EEB55D5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -555,6 +559,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QueueBeta/Pods-QueueBeta-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		747A7B408E1EB9C13EEB55D5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QueueBeta/Pods-QueueBeta-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-QueueBeta/Pods-QueueBeta-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-QueueBeta/Pods-QueueBeta-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		E80A49F4AC1648568ECA8881 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -616,6 +637,7 @@
 				E91D757423046AA300C2D860 /* SignUpController.swift in Sources */,
 				E91D754C22F8C30300C2D860 /* AddImageCell.swift in Sources */,
 				E91D755622F8C4B300C2D860 /* SetLocationController.swift in Sources */,
+				E9D0ADCC230B19620050A597 /* OffersViewController.swift in Sources */,
 				E92DEACF22F8BAFB0075578A /* AppDelegate.swift in Sources */,
 				E91D757923048D2F00C2D860 /* ItemsHorizontalController.swift in Sources */,
 				E9D0ADC2230984BE0050A597 /* NavSearchHeader.swift in Sources */,

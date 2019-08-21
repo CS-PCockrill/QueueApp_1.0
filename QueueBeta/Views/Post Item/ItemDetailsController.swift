@@ -211,23 +211,30 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         return title
     }()
     
-    let deliveryButton: UIButton = {
-        let button = UIButton(type: .system)
-        //        button.setImage(UIImage(named: "spot")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleDelivery), for: .touchUpInside)
-        button.backgroundColor = .purple
-        button.layer.cornerRadius = 20
-        button.layer.masksToBounds = true
-        return button
+    let itemDetailsLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Item details"
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
     }()
     
-    let meetupButton: UIButton = {
+    let pickUpAddressLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Delivery information"
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
+    
+    let addressButton: UIButton = {
         let button = UIButton(type: .system)
-        //        button.setImage(UIImage(named: "spot")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        button.addTarget(self, action: #selector(handleMeetup), for: .touchUpInside)
-        button.backgroundColor = .orange
-        button.layer.cornerRadius = 20
-        button.layer.masksToBounds = true
+        button.layer.borderColor = UIColor.lightGray.cgColor
+        button.addTarget(self, action: #selector(pickUpAddressHandler), for: .touchUpInside)
+        button.layer.borderWidth = 0.5
+        button.layer.cornerRadius = 8
+        button.clipsToBounds = true
+        button.titleLabel?.textAlignment = .left
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        button.tintColor = .black
         return button
     }()
     
@@ -240,20 +247,9 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         return label
     }()
     
-    @objc func handleDelivery() {
-        deliveryButton.isSelected = true
-        meetupButton.isSelected = false
-        //        deliveryButton.backgroundColor = .cyan
-        //        meetupButton.backgroundColor = .purple
-        print("Testing delivery")
-    }
-    
-    @objc func handleMeetup() {
-        meetupButton.isSelected = true
-        deliveryButton.isSelected = false
-        //        meetupButton.backgroundColor = .cyan
-        //        deliveryButton.backgroundColor = .blue
-        print("Testing meetup")
+    @objc func pickUpAddressHandler() {
+        let address = "2357 Southgate Square, Reston VA"
+        addressButton.setTitle(address, for: .normal)
     }
     
     let categoriesLauncher = CategoriesLauncher()
@@ -270,9 +266,7 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         
         let categoryTouchEvent:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleOpenCategories))
         categoryTouchEvent.numberOfTapsRequired = 1
-        
-        let profileView = UIView()
-        profileView.backgroundColor = .white
+
         let imageView = UIView()
         imageView.backgroundColor = .white
         
@@ -322,21 +316,12 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         
         scrollView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-        scrollView.addSubview(profileView)
-        profileView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 65)
-        profileView.addSubview(profileImageView)
-        profileView.addSubview(profileNameLabel)
-        profileView.addSubview(listingLabel)
-        profileView.addSubview(maxImageLabel)
-        
-        profileImageView.anchor(top: profileView.topAnchor, left: profileView.leftAnchor, bottom: profileView.bottomAnchor, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 0, width: 45, height: 0)
-        profileNameLabel.anchor(top: profileImageView.topAnchor, left: profileImageView.rightAnchor, bottom: nil, right: profileView.rightAnchor, paddingTop: 4, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-        listingLabel.anchor(top: profileNameLabel.bottomAnchor, left: profileNameLabel.leftAnchor, bottom: nil, right: profileView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 18)
-        maxImageLabel.anchor(top: nil, left: nil, bottom: profileView.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 10, width: 100, height: 15)
+        scrollView.addSubview(itemDetailsLabel)
+        itemDetailsLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 8, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 25)
         
         
         scrollView.addSubview(imageView)
-        imageView.anchor(top: profileView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
+        imageView.anchor(top: itemDetailsLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
         
         imageView.addSubview(itemsCollectionView)
         itemsCollectionView.backgroundColor = .white
@@ -357,6 +342,12 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         scrollView.addSubview(descriptionView)
         descriptionView.addSubview(descriptionTitle)
         descriptionView.addSubview(descriptionText)
+        
+        scrollView.addSubview(pickUpAddressLabel)
+        pickUpAddressLabel.anchor(top: descriptionView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.rightAnchor, paddingTop: 16, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 25)
+        
+        scrollView.addSubview(addressButton)
+        addressButton.anchor(top: pickUpAddressLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 8, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 50)
         
         // Post title views
         titleView.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: (view.frame.width - 20) * 0.66, height: 65)
@@ -383,10 +374,7 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         
         //  =========================================================================================
         
-        let stackView = UIStackView(arrangedSubviews: [deliveryButton, meetupButton])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 20
+
         //        scrollView.addSubview(stackView)
         //        stackView.anchor(top: descriptionView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 30, paddingBottom: 0, paddingRight: 30, width: 0, height: 225)
         

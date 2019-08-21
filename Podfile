@@ -7,6 +7,9 @@ target 'QueueBeta' do
 
   # Pods for QueueBeta
   pod 'SDWebImage'
+  pod 'GoogleMaps'
+  pod 'GooglePlaces'
+
   # Swift 5.0 or later
   pod 'PullToDismiss', '~> 2.2'
 

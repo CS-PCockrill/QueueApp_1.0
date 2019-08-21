@@ -6,8 +6,9 @@
 //  Copyright © 2019 Patrick Cockrill. All rights reserved.
 //
 import UIKit
+import MapKit
 
-class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate, UISearchBarDelegate {
+class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate, UISearchBarDelegate, CLLocationManagerDelegate {
     
     let cellId = "cellId"
     let headerId = "headerId"
@@ -15,18 +16,21 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     
 //    var featuredItems: FeaturedItems?
     var searchHeader: SearchHeader?
+    var homeLocationManager: CLLocationManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
-
         collectionView?.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.backgroundColor = .white
         
         collectionView.register(CategoriesHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
+        collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
+        
+        
+        homeLocationManager = CLLocationManager()
+        homeLocationManager?.requestWhenInUseAuthorization()
         
         setupNavigationBar()
         fetchData()
@@ -41,6 +45,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         var group1: AppGroup?
         var group2: AppGroup?
         var group3: AppGroup?
+        var group4: AppGroup?
         
         print("Fetching Data from API")
         dispatchGroup.enter()
@@ -57,9 +62,16 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         }
         
         dispatchGroup.enter()
+        Service.shared.fetchAppGroup(urlString: "https://rss.itunes.apple.com/api/v1/us/ios-apps/new-apps-we-love/all/25/explicit.json") { (appGroup, error) in
+            dispatchGroup.leave()
+            group4 = appGroup
+            
+        }
+        
+        dispatchGroup.enter()
         Service.shared.fetchAppGroup(urlString: "https://rss.itunes.apple.com/api/v1/us/ios-apps/top-paid/all/25/explicit.json") { (appGroup, error) in
             dispatchGroup.leave()
-            group2 = appGroup
+            group3 = appGroup
             
         }
 //            self.editorsChoiceGames = appGroup
@@ -78,6 +90,9 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
                 self.groups.append(group)
             }
             if let group = group3 {
+                self.groups.append(group)
+            }
+            if let group = group4 {
                 self.groups.append(group)
             }
             self.collectionView.reloadData()
@@ -190,11 +205,15 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: 250)
+        return .init(width: view.frame.width, height: 234)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        return 18
     }
     
 }

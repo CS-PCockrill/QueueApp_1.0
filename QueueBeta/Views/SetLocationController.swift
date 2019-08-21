@@ -7,7 +7,12 @@
 //
 
 import MapKit
+import GoogleMaps
+import CoreLocation
 import UIKit
+
+// Google API Key
+// AIzaSyB15PqK1-_nrbU9Ium_T1utrrxGTV4VDNw
 
 class SetLocationController: UICollectionViewController, UICollectionViewDelegateFlowLayout, CLLocationManagerDelegate {
     let step: Float = 1
@@ -17,6 +22,7 @@ class SetLocationController: UICollectionViewController, UICollectionViewDelegat
     let customRadius = "customRadius"
     let suggestedRadius = "suggestedRadius"
     var mapView: MKMapView?
+    var locationManager: CLLocationManager!
     
     let search: NavSearchHeader = {
         let search = NavSearchHeader()
@@ -28,8 +34,6 @@ class SetLocationController: UICollectionViewController, UICollectionViewDelegat
         print("dismiss?")
         
     }
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +62,16 @@ class SetLocationController: UICollectionViewController, UICollectionViewDelegat
         collectionView.register(ApplyLocationFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: footerId)
         collectionView.register(CustomRadiusCell.self, forCellWithReuseIdentifier: customRadius)
         collectionView.register(SuggestedRadiusCell.self, forCellWithReuseIdentifier: suggestedRadius)
+        
+        // iPhone Geolocation code
+//        if (CLLocationManager.locationServicesEnabled()) {
+//            locationManager = CLLocationManager()
+//            locationManager?.delegate = self
+//            locationManager?.desiredAccuracy = kCLLocationAccuracyBest
+//            locationManager?.distanceFilter = 50.0
+//            locationManager?.requestAlwaysAuthorization()
+//            locationManager?.startUpdatingLocation()
+//        }
         
     }
     

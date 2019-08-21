@@ -14,7 +14,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         tabBar.tintColor = UIColor.rgb(red: 31, green: 87, blue: 245)
         let index = viewControllers?.firstIndex(of: viewController)
-        if index == 1 {
+        if index == 2 {
             //            let layout = UICollectionViewFlowLayout()
             let shareItemController = ItemDetailsController()
             //            let photoSelectorController = PhotoSelectorController(collectionViewLayout: layout)
@@ -42,6 +42,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         let addItemController = UIViewController()
         let addNavController = setupNavControllers(tabBarTitle: "Sell", unselected: "plus_unselected", selected: "plus_unselected", rootViewController: addItemController)
         
+        let offersNavController = setupNavControllers(tabBarTitle: "Offers", unselected: "grid", selected: "grid", rootViewController: OffersViewController())
 //        let ordersController = OrdersViewController(collectionViewLayout: layout)
 //        let ordersNavController = setupNavControllers(unselected: "like_unselected", selected: "like_selected", rootViewController: ordersController)
 //
@@ -53,7 +54,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         tabBar.tintColor = UIColor.rgb(red: 31, green: 87, blue: 245)
         tabBar.unselectedItemTintColor = UIColor.black
         tabBar.isTranslucent = false
-        viewControllers = [homeNavController, addNavController, profileNavController]
+        viewControllers = [homeNavController, offersNavController, addNavController, profileNavController]
         
         guard let items = tabBar.items else { return }
         for item in items {

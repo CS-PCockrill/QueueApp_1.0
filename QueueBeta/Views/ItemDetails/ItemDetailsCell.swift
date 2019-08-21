@@ -27,10 +27,9 @@ class ItemDetailsCell: UICollectionViewCell {
         priceStack.axis = .vertical
         
         let namePriceStack = VerticalStackView(arrangedSubviews: [nameLabel, priceLabel, descriptionLabel], spacing: 10)
-        namePriceStack.distribution = .equalCentering
         addSubview(namePriceStack)
     
-        namePriceStack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
+        namePriceStack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 8, width: 0, height: 0)
         
         
 //        nameLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: priceLabel.leftAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 0, height: 24)

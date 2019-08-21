@@ -36,16 +36,6 @@ class NavSearchHeader: UIView, UICollectionViewDelegate, UISearchBarDelegate {
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "Search"
         
-        if let window = UIApplication.shared.delegate?.window {
-            if var viewController = window?.rootViewController {
-                // handle navigation controllers
-                if(viewController is UINavigationController){
-                    viewController = (viewController as! UINavigationController).visibleViewController!
-                }
-                print(viewController)
-            }
-        }
-        
         searchBar.barTintColor = UIColor.clear
         searchBar.backgroundColor = UIColor.clear
         searchBar.isTranslucent = true

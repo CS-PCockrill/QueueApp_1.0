@@ -19,6 +19,10 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
     let cellId = "cellId"
     let photoId = "headerId"
     
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
     // FIXME: Code to make variables in detailView show current item details
     var appId: String! {
         didSet {
@@ -103,6 +107,7 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: photoId, for: indexPath) as? ItemHeader
+        headerView?.imageView.sd_setImage(with: URL(string: app?.artworkUrl100 ?? ""))
         
         return headerView!
     }
@@ -123,7 +128,16 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 250)
+        // calculate the necessary size for our cells
+        let dummyCell = ItemDetailsCell(frame: .init(x: 0, y: 0, width: view.frame.width, height: 1000))
+        dummyCell.nameLabel.text = app?.trackName
+        dummyCell.priceLabel.text = app?.formattedPrice
+        dummyCell.descriptionLabel.text = app?.releaseNotes
+        dummyCell.layoutIfNeeded()
+        
+        let estimatedSize = dummyCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 400))
+        
+        return .init(width: view.frame.width, height: estimatedSize.height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
