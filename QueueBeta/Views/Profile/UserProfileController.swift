@@ -29,7 +29,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     @objc func handleLogout() {
-        let loginController = SignUpController()
+        let loginController = GetStartedController()
         let navController = UINavigationController(rootViewController: loginController)
         present(navController, animated: true, completion: nil)
     }

@@ -13,31 +13,30 @@ class NavSearchHeader: UIView, UICollectionViewDelegate, UISearchBarDelegate {
     let cornerRadius: CGFloat = 3.0
     let containerView = UIView()
     
-//    let searchField: UISearchBar = {
-//        let search = UISearchBar()
-//        search.sizeToFit()
-//        search.placeholder = "Search"
-//        search.tintColor = .white
-////        UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).font = UIFont.init(name: "Helvetica Neau", size: 24)
-//        search.autocapitalizationType = .none
-//        return search
-//    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
-        
 
         layoutView()
     }
     
+    @objc func handleOpenSearch() {
+        let view = UISearchController()
+        let navController = UINavigationController(rootViewController: view)
+        self.window?.rootViewController?.present(navController, animated: true, completion: nil)
+    }
+    
     func layoutView() {
+        let openSearchGesture = UIGestureRecognizer(target: self, action: #selector(handleOpenSearch))
+        openSearchGesture.isEnabled = true
+        
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "Search"
-        
+//        searchBar.addGestureRecognizer(openSearchGesture)
         searchBar.barTintColor = UIColor.clear
         searchBar.backgroundColor = UIColor.clear
+//        searchBar.isUserInteractionEnabled = false
         searchBar.isTranslucent = true
         searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         

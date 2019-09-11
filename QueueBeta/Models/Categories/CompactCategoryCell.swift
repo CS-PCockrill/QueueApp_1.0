@@ -129,14 +129,14 @@ class CategoryItemCell: UICollectionViewCell {
     func setupViews() {
         addSubview(imageView)
         
-        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+        imageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: 0, height: 0)
         imageView.addSubview(iconImage)
         iconImage.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 50, height: 50)
         iconImage.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         iconImage.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         
-        imageView.addSubview(itemLabel)
-        itemLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 18)
+//        imageView.addSubview(itemLabel)
+//        itemLabel.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 10, paddingRight: 0, width: 0, height: 18)
     }
 }
 

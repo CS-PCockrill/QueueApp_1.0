@@ -18,6 +18,13 @@ struct Feed: Decodable {
     let results: [FeedResults]
 }
 
+// Temp
+struct CategoryItems: Decodable {
+    let id, name: String
+    let resultCount: Int
+    let results: [Result]
+}
+
 struct FeedResults: Decodable {
     let id, name, artistName, artworkUrl100: String
 }

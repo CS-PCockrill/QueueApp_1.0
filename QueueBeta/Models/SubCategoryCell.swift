@@ -10,6 +10,7 @@ import UIKit
 
 class SubCategoryCell: UICollectionViewCell, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource, UICollectionViewDelegate {
     let cellId = "cellId"
+    let view = CategoriesLauncher()
 
     
     //    let categories = ["Home": ["Tools", "Furniture", "Appliances", "Household"], "Entertainment": ["Bags & Luggage", "Men's Clothing & Shoes", "Women's Clothing & Shoes"], "Electronics": ["Mobile Phones", "Electronics & Computers"], "Hobbies": ["Sports & Outdoors", "Musical Instruments", "Auto Parts", "Bicycles"]]

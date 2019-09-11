@@ -128,9 +128,12 @@ class SearchHeader: UICollectionViewCell {
     }
     
     @objc func handleAddress() {
+
+        
         let layout = UICollectionViewFlowLayout()
         let setLocationController = SetLocationController(collectionViewLayout: layout)
         let navController = UINavigationController(rootViewController: setLocationController)
+//        navController.modalPresentationStyle = .popover
         self.window?.rootViewController?.present(navController, animated: true, completion: nil)
         //        (superview?.next as? UIViewController)?.navigationController?.pushViewController(UIViewController(), animated: true)
     }

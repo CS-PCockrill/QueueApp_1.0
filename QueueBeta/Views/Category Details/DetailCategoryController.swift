@@ -11,10 +11,8 @@ import UIKit
 
 class DetailCategoryController: UICollectionViewController, UISearchBarDelegate, UICollectionViewDelegateFlowLayout {
     
-    var category: Item? {
-        didSet{
-        }
-    }
+    var didSelectHandler: ((FeedResults) -> ())?
+    var appGroup: AppGroup?
     
     private let headerId = "headerId"
     private let cellId = "cellId"
@@ -31,7 +29,11 @@ class DetailCategoryController: UICollectionViewController, UISearchBarDelegate,
         collectionView?.register(SearchHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
         collectionView.register(DetailItemCell.self, forCellWithReuseIdentifier: cellId)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(handleDismiss))
+        
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationController?.navigationBar.isTranslucent = false
+        navigationItem.leftBarButtonItem = UIBarButtonItem(image: (UIImage(named: "gear")), style: .plain, target: self, action: #selector(handleDismiss))
+        navigationItem.leftBarButtonItem?.tintColor = .black
     }
     
     @objc func handleDismiss() {
@@ -45,19 +47,19 @@ class DetailCategoryController: UICollectionViewController, UISearchBarDelegate,
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! SearchHeader
-        
-        header.item = category
+
         return header
     }
     
-    let navSearchHeader: NavSearchHeader = {
-        let header = NavSearchHeader()
+    let navSearchBar: NavSearchHeader = {
+        let search = NavSearchHeader()
         
-        return header
+        return search
     }()
     
     func setupSearchBar() {
-    
+        self.navigationController?.navigationBar.addSubview(navSearchBar)
+        navSearchBar.fillSuperview(padding: .init(top: 0, left: 50, bottom: 0, right: 0))
         
         let whiteView = UIView()
         whiteView.backgroundColor = .white
@@ -68,18 +70,13 @@ class DetailCategoryController: UICollectionViewController, UISearchBarDelegate,
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! DetailItemCell
         
-        if indexPath.item % 2 == 0 {
-            cell.photoImageView.image = UIImage(named: "phonesGroup")
-        } else {
-            cell.photoImageView.image = UIImage(named: "iPhone")
-        }
-        cell.titleLabel.text = "Group of Phones"
-        
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Touch began")
+        if let app = appGroup?.feed.results[indexPath.row] {
+            didSelectHandler?(app)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -106,7 +103,6 @@ class DetailCategoryController: UICollectionViewController, UISearchBarDelegate,
     }
     
 }
-
 
 class SearchBarContainerView: UIView, UISearchBarDelegate {
     

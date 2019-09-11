@@ -16,12 +16,13 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     
 //    var featuredItems: FeaturedItems?
     var searchHeader: SearchHeader?
+    var detailCategoryController: DetailCategoryController?
     var homeLocationManager: CLLocationManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.contentInset = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
-        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 15, left: 0, bottom: 0, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 15, right: 0)
+        collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.backgroundColor = .white
         
@@ -106,20 +107,19 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 150)
+        return CGSize(width: view.frame.width, height: 160)
     }
     
     fileprivate let navSearchHeader: NavSearchHeader = {
         let search = NavSearchHeader()
-
+        
         return search
     }()
     
     fileprivate func setupNavigationBar() {
         self.navigationController?.navigationBar.addSubview(navSearchHeader)
-        navigationController?.view.addConstraintsWithFormat(format: "H:|-10-[v0]-10-|", views: navSearchHeader)
-        navigationController?.view.addConstraintsWithFormat(format: "V:|[v0(50)]", views: navSearchHeader)
-//        navSearchHeader.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 10))
+//        navSearchHeader.fillSuperview(padding: .init(top: 0, left: 8, bottom: 0, right: 8))
+        navSearchHeader.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 10))
         
         let whiteView = UIView()
         whiteView.backgroundColor = .white
@@ -145,7 +145,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         let layout = UICollectionViewFlowLayout()
         let searchController = SearchViewController(collectionViewLayout: layout)
         let navController = UINavigationController(rootViewController: searchController)
-        present(navController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(navController, animated: true)
     }
     
     let dividerLineView: UIView = {
@@ -155,19 +155,16 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     }()
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        navController.modalPresentationStyle = .popover
         let layout = UICollectionViewFlowLayout()
-        let categoryViewController = DetailCategoryController(collectionViewLayout: layout)
-        // Set title of navigationItem in Detail Category...
-        navigationController?.pushViewController(categoryViewController, animated: true)
+        let detailCategoryController = DetailCategoryController(collectionViewLayout: layout)
+        let navController = UINavigationController(rootViewController: detailCategoryController)
+            
+        self.present(navController, animated: true, completion: nil)
         
-    }
-    
-    func showCategoryDetails(category: Item) {
-        let layout = UICollectionViewFlowLayout()
-        let categoryDetailController = DetailCategoryController(collectionViewLayout: layout)
-        categoryDetailController.category = category
-        //        categoryDetailController.categoryNames = category
-        present(categoryDetailController, animated: true, completion: nil)
+        // Tapping on category section title (i.e. Local Picks, Mobile Phones) Section TITLE
+        // TODO: Select the detail category Controller.
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -188,15 +185,9 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
             let layout = UICollectionViewFlowLayout()
             let detailItemController = DetailViewController(collectionViewLayout: layout)
             detailItemController.appId = feedResult.id
-//            detailItemController.toolbar.isHidden = true
             let navController = UINavigationController(rootViewController: detailItemController)
-//            navController.hidesBottomBarWhenPushed = true
-            navController.modalPresentationStyle = .overCurrentContext
-            navController.toolbar.barStyle = .blackTranslucent;
-            navController.navigationController?.title = "TEST"
             
             self?.present(navController, animated: true, completion: nil)
-            
         }
 //            cell.itemCategory = featuredItems?.itemCategories?[indexPath.item]
             
@@ -205,7 +196,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: 234)
+        return .init(width: view.frame.width, height: 240)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

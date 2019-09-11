@@ -35,11 +35,15 @@ class ItemsHorizontalController: BaseListController, UICollectionViewDelegateFlo
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        if appGroup?.feed.results.count {
+//            
+//        }
         return appGroup?.feed.results.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! ItemCell
+        // Retrieve the feed results index path of each app dictionary data...
         let app = appGroup?.feed.results[indexPath.item]
         cell.imageView.sd_setImage(with: URL(string: app?.artworkUrl100 ?? ""))
         

@@ -18,22 +18,22 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
     
     lazy var scrollView: UIScrollView = {
         let sv = UIScrollView()
+        sv.isScrollEnabled = true
         sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.contentSize.height = 1000
+        sv.contentSize.height = 1200
         sv.backgroundColor = UIColor.white
+        sv.alwaysBounceVertical = true
         return sv
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
 //        let shareGesture:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleShare))
 //        shareGesture.numberOfTapsRequired = 1
         
         view.backgroundColor = .white
-        navigationController?.isToolbarHidden = false
-        navigationController?.toolbar.isTranslucent = false
+        navigationController?.isToolbarHidden = true
+        navigationController?.toolbar.isTranslucent = true
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.tintColor = .black
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
@@ -47,6 +47,7 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
 //        shareButton.anchor(top: nil, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 10, paddingBottom: 2, paddingRight: 10, width: (view.frame.width), height: 44)
         
         view.addSubview(scrollView)
+
         setupScrollView()
         
         //        setupHeaderViews()
@@ -214,27 +215,28 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
     let itemDetailsLabel: UILabel = {
         let label = UILabel()
         label.text = "Item details"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
     
     let pickUpAddressLabel: UILabel = {
         let label = UILabel()
         label.text = "Delivery information"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
     
-    let addressButton: UIButton = {
+    let nextButton: UIButton = {
         let button = UIButton(type: .system)
-        button.layer.borderColor = UIColor.lightGray.cgColor
-        button.addTarget(self, action: #selector(pickUpAddressHandler), for: .touchUpInside)
+        button.backgroundColor = UIColor.rgb(red: 31, green: 87, blue: 245)
+        button.addTarget(self, action: #selector(handleNext), for: .touchUpInside)
         button.layer.borderWidth = 0.5
         button.layer.cornerRadius = 8
+        button.setTitle("Next", for: .normal)
         button.clipsToBounds = true
-        button.titleLabel?.textAlignment = .left
+        button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-        button.tintColor = .black
+        button.tintColor = .white
         return button
     }()
     
@@ -247,9 +249,10 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         return label
     }()
     
-    @objc func pickUpAddressHandler() {
-        let address = "2357 Southgate Square, Reston VA"
-        addressButton.setTitle(address, for: .normal)
+    @objc func handleNext() {
+        let layout = UICollectionViewFlowLayout()
+        let controller = DeliveryInformationController(collectionViewLayout: layout)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     let categoriesLauncher = CategoriesLauncher()
@@ -299,6 +302,7 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         let categoryView = UIView()
         categoryView.clipsToBounds = true
         categoryView.layer.borderColor = UIColor.lightGray.cgColor
+        categoryView.backgroundColor = .white
         categoryView.layer.borderWidth = 0.5
         categoryView.layer.cornerRadius = 7.5
         categoryView.isUserInteractionEnabled = true
@@ -310,18 +314,15 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         descriptionTitle.textColor = .lightGray
         let descriptionView = UIView()
         descriptionView.clipsToBounds = true
+        descriptionView.backgroundColor = .white
         descriptionView.layer.borderColor = UIColor.lightGray.cgColor
         descriptionView.layer.borderWidth = 0.5
         descriptionView.layer.cornerRadius = 7.5
         
         scrollView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
-        scrollView.addSubview(itemDetailsLabel)
-        itemDetailsLabel.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 8, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 25)
-        
-        
         scrollView.addSubview(imageView)
-        imageView.anchor(top: itemDetailsLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 250)
+        imageView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 225)
         
         imageView.addSubview(itemsCollectionView)
         itemsCollectionView.backgroundColor = .white
@@ -343,11 +344,7 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         descriptionView.addSubview(descriptionTitle)
         descriptionView.addSubview(descriptionText)
         
-        scrollView.addSubview(pickUpAddressLabel)
-        pickUpAddressLabel.anchor(top: descriptionView.bottomAnchor, left: scrollView.leftAnchor, bottom: nil, right: scrollView.rightAnchor, paddingTop: 16, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 25)
-        
-        scrollView.addSubview(addressButton)
-        addressButton.anchor(top: pickUpAddressLabel.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 8, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 50)
+        scrollView.addSubview(nextButton)
         
         // Post title views
         titleView.anchor(top: imageView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 10, paddingBottom: 0, paddingRight: 10, width: (view.frame.width - 20) * 0.66, height: 65)
@@ -373,7 +370,7 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         descriptionText.anchor(top: descriptionTitle.bottomAnchor, left: descriptionView.leftAnchor, bottom: descriptionView.bottomAnchor, right: descriptionView.rightAnchor, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 4, width: 0, height: 0)
         
         //  =========================================================================================
-        
+        nextButton.anchor(top: descriptionView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 42)
 
         //        scrollView.addSubview(stackView)
         //        stackView.anchor(top: descriptionView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 30, paddingBottom: 0, paddingRight: 30, width: 0, height: 225)
