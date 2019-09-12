@@ -20,7 +20,7 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         let sv = UIScrollView()
         sv.isScrollEnabled = true
         sv.translatesAutoresizingMaskIntoConstraints = false
-        sv.contentSize.height = 1200
+        sv.contentSize.height = 700
         sv.backgroundColor = UIColor.white
         sv.alwaysBounceVertical = true
         return sv
@@ -249,10 +249,29 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         return label
     }()
     
+    var viewController = DeliveryInformationController()
+    let switchOnOff = UISwitch(frame:CGRect(x: 150, y: 150, width: 0, height: 0))
+
     @objc func handleNext() {
-        let layout = UICollectionViewFlowLayout()
-        let controller = DeliveryInformationController(collectionViewLayout: layout)
-        self.navigationController?.pushViewController(controller, animated: true)
+        if (switchStateDidChange(switchOnOff)) {
+            let layout = UICollectionViewFlowLayout()
+            let controller = DeliveryInformationController(collectionViewLayout: layout)
+            self.navigationController?.pushViewController(controller, animated: true)
+        } else {
+            let layout = UICollectionViewFlowLayout()
+            let controller = PreviewController(collectionViewLayout: layout)
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+        
+    }
+    
+    @objc func switchStateDidChange(_ sender:UISwitch) -> Bool {
+        if (sender.isOn == true){
+            return true
+        }
+        else{
+            return false
+        }
     }
     
     let categoriesLauncher = CategoriesLauncher()
@@ -319,6 +338,11 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         descriptionView.layer.borderWidth = 0.5
         descriptionView.layer.cornerRadius = 7.5
         
+//        let switchOnOff = UISwitch(frame:CGRect(x: 150, y: 150, width: 0, height: 0))
+        switchOnOff.addTarget(self, action: #selector(ItemDetailsController.switchStateDidChange(_:)), for: .valueChanged)
+        switchOnOff.setOn(true, animated: false)
+        self.scrollView.addSubview(switchOnOff)
+        
         scrollView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         
         scrollView.addSubview(imageView)
@@ -371,6 +395,8 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         
         //  =========================================================================================
         nextButton.anchor(top: descriptionView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 42)
+        
+        switchOnOff.anchor(top: nextButton.bottomAnchor, left: nil, bottom: nil, right: view.rightAnchor, paddingTop: 15, paddingLeft: 0, paddingBottom: 0, paddingRight: 40, width: 60, height: 42)
 
         //        scrollView.addSubview(stackView)
         //        stackView.anchor(top: descriptionView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 30, paddingBottom: 0, paddingRight: 30, width: 0, height: 225)

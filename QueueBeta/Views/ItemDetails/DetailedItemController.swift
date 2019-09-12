@@ -61,6 +61,8 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
         collectionView.isScrollEnabled = true
 
         self.navigationController?.isToolbarHidden = false
+        self.navigationController?.toolbar.isTranslucent = false
+        
         
         let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(handleMakeOffer))
         
@@ -68,11 +70,12 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
         
         collectionView.register(ItemDetailsCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(SellerInformationCell.self, forCellWithReuseIdentifier: sellerId)
+        collectionView.register(MoreItemDetailsCell.self, forCellWithReuseIdentifier: detailsId)
         
         collectionView.register(ItemHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: photoId)
-        collectionView.register(MakeOfferFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: offerId)
 
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "x_close_button"), style: .plain, target: self, action: #selector(handleBack))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: view, action: #selector(UIView.endEditing(_:))))
     }
 //    
 //    override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -120,10 +123,6 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
             // TODO: Fix pixelated image quality
 //            headerView?.imageView.layer.magnificationFilter = CALayerContentsFilter.linear
             return headerView!
-        } else if kind == UICollectionView.elementKindSectionFooter {
-            let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: offerId, for: indexPath) as? MakeOfferFooter
-            
-            return footer!
         }
         
         fatalError()
@@ -132,10 +131,6 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 400)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 50)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -148,11 +143,12 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
             
             return cell
         } else if indexPath.item == 1 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: detailsId, for: indexPath) as! MoreItemDetailsCell
+            return cell
+            
+        } else if indexPath.item == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: sellerId, for: indexPath) as! SellerInformationCell
             
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath)
             return cell
         }
         fatalError()
@@ -167,17 +163,18 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
 //            dummyCell.descriptionLabel.text = app?.releaseNotes
 //            dummyCell.layoutIfNeeded()
             
-//            let estimatedSize = dummyCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 400))
-            
+//            let estimatedSize = dummyCell.systemLayoutSizeFitting(.init(width: view.frame.width, height: 400)
             return .init(width: view.frame.width, height: 240)
-        } else {
-            return .init(width: view.frame.width, height: 225)
+        } else if indexPath.item == 1 {
+            return .init(width: view.frame.width, height: 185)
+        } else  if indexPath.item == 2 {
+            return .init(width: view.frame.width, height: 247)
         } 
         fatalError()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 3
     }
     
 }

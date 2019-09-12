@@ -105,8 +105,8 @@ class SendMessageView: UIView {
         messageContainerView.addSubview(sendMessageButton)
         
         sendMessageSellerLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 10, paddingBottom: 0, paddingRight: 0, width: 0, height: 15)
-        messageTextField.anchor(top: sendMessageSellerLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: sendMessageButton.leftAnchor, paddingTop: 8, paddingLeft: 10, paddingBottom: 8, paddingRight: 10, width: 0, height: 0)
-        sendMessageButton.anchor(top: sendMessageSellerLabel.bottomAnchor, left: messageTextField.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 8, paddingBottom: 8, paddingRight: 10, width: 64, height: 0)
+        messageTextField.anchor(top: sendMessageSellerLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 8, paddingLeft: 10, paddingBottom: 8, paddingRight: 10, width: frame.width * 0.75, height: 0)
+//        sendMessageButton.anchor(top: messageTextField.topAnchor, left: messageTextField.rightAnchor, bottom: messageTextField.bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 8, width: 0, height: 0)
     }
 }
 
