@@ -28,7 +28,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         
         collectionView.register(CategoriesHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
-        
+
         
         homeLocationManager = CLLocationManager()
         homeLocationManager?.requestWhenInUseAuthorization()
@@ -101,13 +101,15 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! CategoriesHeader
+//        let appGroup = groups[indexPath.item]
         
+//        header.itemCategoriesHorizontalController.appGroup = appGroup
         return header
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: view.frame.width, height: 160)
+        return CGSize(width: view.frame.width, height: 140)
     }
     
     fileprivate let navSearchHeader: NavSearchHeader = {
@@ -157,10 +159,14 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        navController.modalPresentationStyle = .popover
         let layout = UICollectionViewFlowLayout()
+        let appGroup = groups[indexPath.item]
         let detailCategoryController = DetailCategoryController(collectionViewLayout: layout)
+        detailCategoryController.appGroup = appGroup
+        detailCategoryController.collectionView.reloadData()
+        
         let navController = UINavigationController(rootViewController: detailCategoryController)
-            
-        self.present(navController, animated: true, completion: nil)
+
+        self.navigationController?.pushViewController(detailCategoryController, animated: true)
         
         // Tapping on category section title (i.e. Local Picks, Mobile Phones) Section TITLE
         // TODO: Select the detail category Controller.

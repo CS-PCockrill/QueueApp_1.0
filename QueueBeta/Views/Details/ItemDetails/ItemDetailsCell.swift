@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ItemDetailsCell: UICollectionViewCell {
+class ItemOverviewCell: UICollectionViewCell {
     
     let messageContainerView = UIView()
     let nestedView = UIView()

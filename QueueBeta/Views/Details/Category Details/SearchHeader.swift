@@ -9,16 +9,7 @@
 import UIKit
 
 class SearchHeader: UICollectionViewCell {
-    
-    var categoryCell: CategoryCell?
-    //    var delegate: CellDelegate?
-    var item: Item? {
-        didSet {
-            categoryName.text = item?.categoryTitle
-        }
-    }
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.white
@@ -128,14 +119,13 @@ class SearchHeader: UICollectionViewCell {
     }
     
     @objc func handleAddress() {
-
-        
         let layout = UICollectionViewFlowLayout()
         let setLocationController = SetLocationController(collectionViewLayout: layout)
         let navController = UINavigationController(rootViewController: setLocationController)
+        navController.modalPresentationStyle = .popover
 //        navController.modalPresentationStyle = .popover
         self.window?.rootViewController?.present(navController, animated: true, completion: nil)
-        //        (superview?.next as? UIViewController)?.navigationController?.pushViewController(UIViewController(), animated: true)
+//        (superview?.next as? UICollectionViewController)?.navigationController?.pushViewController(setLocationController, animated: true)
     }
     
 }

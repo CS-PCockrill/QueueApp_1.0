@@ -11,6 +11,8 @@ import UIKit
 class ItemCategoriesHeaderController: BaseListController, UICollectionViewDelegateFlowLayout {
     let cellId = "cellId"
     
+    var appGroup: AppGroup?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,7 +29,7 @@ class ItemCategoriesHeaderController: BaseListController, UICollectionViewDelega
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("Touch event in categories")
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

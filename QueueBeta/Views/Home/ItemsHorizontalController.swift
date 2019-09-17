@@ -35,9 +35,6 @@ class ItemsHorizontalController: BaseListController, UICollectionViewDelegateFlo
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        if appGroup?.feed.results.count {
-//            
-//        }
         return appGroup?.feed.results.count ?? 0
     }
     
