@@ -12,6 +12,7 @@ class ItemCategoriesHeaderController: BaseListController, UICollectionViewDelega
     let cellId = "cellId"
     
     var appGroup: AppGroup?
+    var app: Result?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +26,13 @@ class ItemCategoriesHeaderController: BaseListController, UICollectionViewDelega
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 8
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+//        if let app = appGroup?.feed.results[indexPath.item] {
+//            didSelectHandler?(app)
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -46,7 +49,8 @@ class ItemCategoriesHeaderController: BaseListController, UICollectionViewDelega
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        
+        let app = appGroup?.feed.results[indexPath.item]
+        // Assign variables... (labels, icons)
         return cell
     }
 }

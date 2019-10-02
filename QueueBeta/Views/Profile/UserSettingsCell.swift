@@ -22,6 +22,7 @@ class UserStoreCell: UICollectionViewCell {
     
     private func layoutViews() {
         addSubview(userSettingsLabel)
+        userSettingsLabel.textColor = .black
         userSettingsLabel.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 8, paddingLeft: 16, paddingBottom: 0, paddingRight: 0, width: 0, height: 30)
         
         addSubview(settingsCollectionView.view)
@@ -60,7 +61,7 @@ class UserStoreCollectionView: BaseListController, UICollectionViewDelegateFlowL
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 190, height: 190)
+        return CGSize(width: 170, height: 170)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

@@ -12,7 +12,7 @@ class SearchHeader: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor.orange
         setupViews()
     }
     

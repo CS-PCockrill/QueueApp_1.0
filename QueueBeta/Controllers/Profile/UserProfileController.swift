@@ -20,9 +20,10 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
         collectionView.backgroundColor = .white
         collectionView.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerId")
         collectionView.register(UserStoreCell.self, forCellWithReuseIdentifier: userSettingsId)
+        collectionView.register(UserReviewsCell.self, forCellWithReuseIdentifier: "cellId")
         
         self.navigationController?.navigationBar.tintColor = .black
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "gear"), style: .plain, target: self, action: #selector(handleLogout))
+        setupSettingsButton()
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -33,26 +34,83 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userSettingsId, for: indexPath) as! UserStoreCell
-        return cell
+        
+        if indexPath.item == 0 {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: userSettingsId, for: indexPath) as! UserStoreCell
+            return cell
+        } else if indexPath.item == 1 {
+            let view = UIView()
+            view.backgroundColor = UITableView().separatorColor
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! UserReviewsCell
+            
+            cell.addSubview(view)
+            view.anchor(top: cell.topAnchor, left: cell.leftAnchor, bottom: nil, right: cell.rightAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 0.5)
+            return cell
+        }
+        fatalError()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 244)
+        if indexPath.item == 0 {
+            return CGSize(width: view.frame.width, height: 224)
+        } else if indexPath.item == 1 {
+            return CGSize(width: view.frame.width, height: 195)
+        }
+        fatalError()
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    @objc func handleLogout() {
-        let loginController = GetStartedController()
-        let navController = UINavigationController(rootViewController: loginController)
-        present(navController, animated: true, completion: nil)
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: view.frame.width, height: 280)
+    }
+    
+    @objc func setupSettingsButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "gear"), style: .plain, target: self, action: #selector(handleLogout))
+        
+    }
+    
+    @objc func handleLogout() {
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        alertController.addAction(UIAlertAction(title: "Log Out", style: .destructive, handler: { (_) in
+            
+            do {
+//                try Auth.auth().signOut()
+                
+                //what happens? we need to present some kind of login controller
+                let loginController = GetStartedController()
+                
+                let navController = UINavigationController(rootViewController: loginController)
+                navController.modalPresentationStyle = .overFullScreen
+                self.present(navController, animated: true, completion: nil)
+                
+            } catch let signOutErr {
+                print("Failed to sign out:", signOutErr)
+            }
+            
+            
+        }))
+        alertController.addAction(UIAlertAction(title: "Edit Profile", style: .default, handler: { (_) in
+            do {
+                let editProfileController = EditProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+                let navController = UINavigationController(rootViewController: editProfileController)
+                self.present(navController, animated: true, completion: nil)
+            } catch let editProfErr {
+                print("Failed to open edit profile:", editProfErr)
+            }
+        }))
+        
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alertController, animated: true, completion: nil)
+        
+//        let loginController = GetStartedController()
+//        let navController = UINavigationController(rootViewController: loginController)
+//        present(navController, animated: true, completion: nil)
     }
     
 }
@@ -80,18 +138,12 @@ class UserProfileHeader: UICollectionViewCell, UIImagePickerControllerDelegate, 
         return ui
     }()
     
-//    let logoutButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.setImage(UIImage(named: "gear")?.withRenderingMode(.alwaysOriginal), for: .normal)
-////        button.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
-//        return button
-//    }()
-    
     let usernameLabel: UILabel = {
         let ul = UILabel()
         ul.textAlignment = .center
         ul.text = "Patrick Cockrill"
         ul.font = UIFont.boldSystemFont(ofSize: 22)
+        ul.textColor = .black
         return ul
     }()
     
@@ -101,45 +153,22 @@ class UserProfileHeader: UICollectionViewCell, UIImagePickerControllerDelegate, 
         return dlv
     }()
     
-    let userRating: UILabel = {
-        let ur = UILabel()
-        ur.text = "4.95"
-        ur.font = UIFont.systemFont(ofSize: 17)
-        ur.textColor = UIColor.gray
-        ur.textAlignment = .center
-        return ur
+    let userRatingsView: UserRatingView = {
+        let view = UserRatingView()
+        
+        return view
     }()
     
-    let editProfileButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("Edit Profile", for: .normal)
-        button.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 8
-        button.backgroundColor = UIColor.white
-        button.setTitleColor(UIColor.rgb(red: 31, green: 87, blue: 245), for: .normal)
-        button.layer.borderColor = UIColor.rgb(red: 31, green: 87, blue: 245).cgColor
-        button.layer.borderWidth = 1
-        return button
+    let userVerificationView: UserVerificationLevelView = {
+        let view = UserVerificationLevelView()
+        
+        return view
     }()
-    
-    @objc func handleEditProfile() {
-        print("TEST")
-        let view = UICollectionViewFlowLayout()
-        let controller = EditProfileController(collectionViewLayout: view)
-        self.window?.rootViewController?.present(controller, animated: true, completion: nil)
-    }
-    
-    @objc func handleProfilePhoto() {
-        print("handling")
-        //        let imagePickerController = UIImagePickerController()
-        //        imagePickerController.delegate = self
-        //        imagePickerController.allowsEditing = true
-        //        present(imagePickerController, animated: true, completion: nil)
-    }
     
     func setupProfileHeader() {
         addSubview(userProfileImage)
+//        addSubview(userRatingsView)
+//        addSubview(userVerificationView)
         let dividerLineView = UIView()
         dividerLineView.backgroundColor = .lightGray
         addSubview(dividerLineView)
@@ -153,24 +182,22 @@ class UserProfileHeader: UICollectionViewCell, UIImagePickerControllerDelegate, 
         userProfileImage.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         userProfileImage.layer.cornerRadius = 140 / 2
         
-        let stackView = VerticalStackView(arrangedSubviews: [usernameLabel, userRating, editProfileButton], spacing: 8)
-        stackView.distribution = .equalSpacing
-        addSubview(stackView)
+        addSubview(usernameLabel)
         
-        stackView.anchor(top: userProfileImage.bottomAnchor, left: nil, bottom: dividerLineView.topAnchor, right: nil, paddingTop: 16, paddingLeft: 0, paddingBottom: 16, paddingRight: 0, width: 160, height: 0)
+        usernameLabel.anchor(top: userProfileImage.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 0, paddingBottom: 16, paddingRight: 0, width: 160, height: usernameLabel.intrinsicContentSize.height)
+        usernameLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        
+        let stackView = UIStackView(arrangedSubviews: [userRatingsView, userVerificationView], customSpacing: 8)
+        stackView.distribution = .fillEqually
+        stackView.axis = .horizontal
+        addSubview(stackView)
+        stackView.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 16, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 108, height: 50)
         stackView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
-        
+//        userRatingsView.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 60, height: 60)
+//        userRatingsView.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         
         dividerLineView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 0.5)
-        
-//        usernameLabel.anchor(top: userProfileImage.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 10, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: frame.width, height: 30)
-//
-//        userRating.anchor(top: usernameLabel.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 2.5, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: frame.width, height: 20)
-//
-//        editProfileButton.anchor(top: userRating.bottomAnchor, left: nil, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 0, paddingBottom: 8, paddingRight: 0, width: 80, height: 40)
-//        editProfileButton.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-
         
     }
 }

@@ -21,21 +21,31 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView?.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 15, right: 0)
+        collectionView?.contentInset = UIEdgeInsets(top: 18, left: 0, bottom: 15, right: 0)
         collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
         navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.backgroundColor = .white
         
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
+//        view.addGestureRecognizer(tap)
+        
         collectionView.register(CategoriesHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         collectionView?.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
+        collectionView?.backgroundColor = UIColor.white
+        self.navigationController?.navigationBar.isTranslucent = false
 
-        
-        homeLocationManager = CLLocationManager()
-        homeLocationManager?.requestWhenInUseAuthorization()
+//        homeLocationManager = CLLocationManager()
+//        homeLocationManager?.requestWhenInUseAuthorization()
         
         setupNavigationBar()
         fetchData()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+      navigationController?.navigationBar.barStyle = .black
+    }
+    
+    
     
     var editorsChoiceGames: AppGroup?
     var groups = [AppGroup]()
@@ -102,7 +112,10 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! CategoriesHeader
-//        let appGroup = groups[indexPath.item]
+//        let appGroup = groups[indexPath.item].feed
+//        header.itemCategoriesHorizontalController.appGr
+//        header.itemCategoriesHorizontalController.appGroup = appGroup
+//        header.itemCategoriesHorizontalController.collectionView.reloadData()
         
 //        header.itemCategoriesHorizontalController.appGroup = appGroup
         return header
@@ -114,33 +127,42 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     
     fileprivate let navSearchHeader: NavSearchHeader = {
         let search = NavSearchHeader()
-        
+
         return search
     }()
-    
+
     fileprivate func setupNavigationBar() {
         self.navigationController?.navigationBar.addSubview(navSearchHeader)
 //        navSearchHeader.fillSuperview(padding: .init(top: 0, left: 8, bottom: 0, right: 8))
         navSearchHeader.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 10))
+
+        let dividerView = UIView()
+        dividerView.backgroundColor = UITableView().separatorColor
         
         let whiteView = UIView()
         whiteView.backgroundColor = .white
         view.addSubview(whiteView)
-        whiteView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 10)
-        
-        collectionView?.backgroundColor = UIColor.white
-        self.navigationController?.navigationBar.isTranslucent = false
+        view.addSubview(dividerView)
+        whiteView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: dividerView.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 8)
+        dividerView.anchor(top: whiteView.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0.5)
     }
     
+//    override var prefersStatusBarHidden: Bool {
+//      return true
+//    }
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .default
+        if #available(iOS 13.0, *) {
+            return .default
+        } else {
+            return .default
+        }
     }
     
-    let addressLauncher = AddressLauncher()
+//    let addressLauncher = AddressLauncher()
 
-    @objc func handleAddresses() {
-        addressLauncher.showAddresses()
-    }
+//    @objc func handleAddresses() {
+//        addressLauncher.showAddresses()
+//    }
     
     @objc func searchTapped() {
 //        let layout = StretchHeaderLayout()
@@ -165,8 +187,9 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
         detailCategoryController.collectionView.reloadData()
         
         let navController = UINavigationController(rootViewController: detailCategoryController)
+        navController.modalPresentationStyle = .fullScreen
 
-        self.navigationController?.pushViewController(detailCategoryController, animated: true)
+        self.present(navController, animated: true, completion: nil)
         
         // Tapping on category section title (i.e. Local Picks, Mobile Phones) Section TITLE
         // TODO: Select the detail category Controller.
@@ -192,8 +215,10 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
             let detailItemController = DetailViewController(collectionViewLayout: layout)
             detailItemController.appId = feedResult.id
             let navController = UINavigationController(rootViewController: detailItemController)
+            navController.modalPresentationStyle = .overFullScreen
+//            navController.modalTransitionStyle = .crossDissolve
             
-            self?.present(navController, animated: true, completion: nil)
+            self?.navigationController?.present(navController, animated: true, completion: nil)
         }
 //            cell.itemCategory = featuredItems?.itemCategories?[indexPath.item]
             
@@ -202,7 +227,7 @@ class HomeViewController: BaseListController, UICollectionViewDelegateFlowLayout
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width, height: 240)
+        return .init(width: view.frame.width, height: (view.frame.width / 2) - 16 + 46)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {

@@ -37,14 +37,14 @@ class NavSearchHeader: UIView, UICollectionViewDelegate, UISearchBarDelegate {
         searchBar.barTintColor = UIColor.clear
         searchBar.backgroundColor = UIColor.clear
 //        searchBar.isUserInteractionEnabled = false
-        searchBar.isTranslucent = true
+        searchBar.isTranslucent = false
         searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
         
         // set the shadow of the view's layer
         containerView.layer.backgroundColor = UIColor.clear.cgColor
         containerView.layer.shadowColor = UIColor.black.cgColor
         containerView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        containerView.layer.shadowOpacity = 0.0
+        containerView.layer.shadowOpacity = 0.15
         containerView.layer.shadowRadius = 3
         
         // set the cornerRadius of the containerView's layer

@@ -10,13 +10,13 @@ import UIKit
 
 class DetailItemCell: UICollectionViewCell {
     
-    var postItem: Item? {
-        didSet {
-            if let imageName = postItem?.imageName {
-                photoImageView.image = UIImage(named: imageName)
-            }
-        }
-    }
+//    var postItem: Item? {
+//        didSet {
+//            if let imageName = postItem?.imageName {
+//                photoImageView.image = UIImage(named: imageName)
+//            }
+//        }
+//    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -256,11 +256,17 @@ class ItemDetailsController: UIViewController, UICollectionViewDelegateFlowLayou
         if (switchStateDidChange(switchOnOff)) {
             let layout = UICollectionViewFlowLayout()
             let controller = DeliveryInformationController(collectionViewLayout: layout)
-            self.navigationController?.pushViewController(controller, animated: true)
+            
+            let navController = UINavigationController(rootViewController: controller)
+            navController.modalPresentationStyle = .popover
+            self.present(navController, animated: true, completion: nil)
         } else {
             let layout = UICollectionViewFlowLayout()
             let controller = PreviewController(collectionViewLayout: layout)
-            self.navigationController?.pushViewController(controller, animated: true)
+            
+            let navController = UINavigationController(rootViewController: controller)
+            navController.modalPresentationStyle = .popover
+            self.present(navController, animated: true, completion: nil)
         }
         
     }

@@ -8,12 +8,13 @@
 
 import UIKit
 import CoreData
+import MapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var locationManager: CLLocationManager?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -25,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
+        UIApplication.shared.statusBarStyle = .default //Set Style
+        UIApplication.shared.isStatusBarHidden = false //Set if hidden 
         return true
     }
 
@@ -39,6 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
+        locationManager = CLLocationManager()
+        locationManager?.requestWhenInUseAuthorization()
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 

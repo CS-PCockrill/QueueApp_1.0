@@ -19,6 +19,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
             let shareItemController = ItemDetailsController()
             //            let photoSelectorController = PhotoSelectorController(collectionViewLayout: layout)
             let navController = UINavigationController(rootViewController: shareItemController)
+            navController.modalPresentationStyle = .overFullScreen
             present(navController, animated: true, completion: nil)
             return false
         }
@@ -33,6 +34,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func setupNavIcons() {
+        
         let layout = UICollectionViewFlowLayout()
         let homeController = HomeViewController()
         let homeNavController = setupNavControllers(tabBarTitle: "Home", unselected: "home_unselected", selected: "home_selected", rootViewController: homeController)
@@ -52,6 +54,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         //        tabBar.tintColor = UIColor.rgb(red: 31, green: 87, blue: 245)
         tabBar.tintColor = UIColor.rgb(red: 31, green: 87, blue: 245)
+        UITabBar.appearance().barTintColor = .white
         tabBar.unselectedItemTintColor = UIColor.black
         tabBar.isTranslucent = false
         viewControllers = [homeNavController, offersNavController, addNavController, profileNavController]

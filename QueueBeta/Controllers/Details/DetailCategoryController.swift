@@ -37,16 +37,14 @@ class DetailCategoryController: UICollectionViewController, UISearchBarDelegate,
         super.viewDidLoad()
         //        collectionView.register(SearchHeader.self, forCellWithReuseIdentifier: "headerId")
         collectionView.backgroundColor = .white
-        collectionView.alwaysBounceVertical = true
-        collectionView.contentInset = UIEdgeInsets(top: 10, left: 0, bottom: 0, right: 0)
-//        setupSearchBar()
+        navigationController?.navigationBar.backgroundColor = .white
         
         collectionView?.register(SearchHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
         
         collectionView.register(DetailItemCell.self, forCellWithReuseIdentifier: cellId)
         
-        navigationController?.navigationBar.backgroundColor = .blue
-        navigationController?.navigationBar.isTranslucent = false
+//        navigationController?.navigationBar.barTintColor = .blue
+//        navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.isHidden = false
         navigationItem.leftBarButtonItem = UIBarButtonItem(image: (UIImage(named: "gear")), style: .plain, target: self, action: #selector(handleDismiss))
         navigationItem.leftBarButtonItem?.tintColor = .black
@@ -67,12 +65,6 @@ class DetailCategoryController: UICollectionViewController, UISearchBarDelegate,
         
         return header
     }
-    
-    let navSearchBar: NavSearchHeader = {
-        let search = NavSearchHeader()
-        
-        return search
-    }()
     
 //    func setupSearchBar() {
 //        self.navigationController?.navigationBar.addSubview(navSearchBar)
@@ -97,6 +89,7 @@ class DetailCategoryController: UICollectionViewController, UISearchBarDelegate,
             let detailItemController = DetailViewController(collectionViewLayout: layout)
             detailItemController.appId = feedResult.id
             let navController = UINavigationController(rootViewController: detailItemController)
+            navController.modalPresentationStyle = .overFullScreen
             
             self?.present(navController, animated: true, completion: nil)
         }

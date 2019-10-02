@@ -42,12 +42,14 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
         return 0
     }
     
+    var statusBarView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.backgroundColor = .rgb(red: 237, green: 236, blue: 236)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.alwaysBounceVertical = true
+        collectionView.alwaysBounceVertical = false
         collectionView.isScrollEnabled = true
         collectionView.isPagingEnabled = true
         
@@ -56,7 +58,16 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
         collectionView.register(SellerInformationCell.self, forCellWithReuseIdentifier: sellerId)
         collectionView.register(MoreItemDetail.self, forCellWithReuseIdentifier: detailsId)
         
-        UIApplication.shared.statusBarView?.isHidden = false
+        
+        let app = UIApplication.shared
+        let statusBarHeight: CGFloat = app.statusBarFrame.size.height
+        
+        statusBarView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: statusBarHeight))
+//        statusBarView.backgroundColor = .systemBlue
+        view.addSubview(statusBarView)
+//        let height = view.window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+//        UIApplication.shared.statusBarView?.isHidden = false
+        
         self.navigationController?.navigationBar.tintColor = .white
         self.navigationController?.isToolbarHidden = false
         self.navigationController?.toolbar.isTranslucent = false
@@ -80,14 +91,27 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
             let color = UIColor(red: 1, green: 1, blue: 1, alpha: offset)
             self.navigationController?.navigationBar.tintColor = UIColor(white: 0, alpha: offset)
             self.navigationController?.navigationBar.backgroundColor = color
-            UIApplication.shared.statusBarView?.backgroundColor = color
+//            UIApplication.shared.statusBarView?.backgroundColor = color
+            if #available(iOS 13.0, *) {
+                statusBarView.backgroundColor = color
+            } else {
+                let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
+                statusBar?.backgroundColor = color
+            }
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(white: 0, alpha: offset)]
             self.title = app?.trackName
         } else {
             let color = UIColor(red: 1, green: 1, blue: 1, alpha: offset)
             self.navigationController?.navigationBar.tintColor = UIColor(white: 1, alpha: 1)
             self.navigationController?.navigationBar.backgroundColor = color
-            UIApplication.shared.statusBarView?.backgroundColor = color
+//            UIApplication.shared.statusBarView?.backgroundColor = color
+            if #available(iOS 13.0, *) {
+                statusBarView.backgroundColor = color
+            } else {
+                let statusBar = UIApplication.shared.value(forKeyPath: "statusBarWindow.statusBar") as? UIView
+                statusBar?.backgroundColor = color
+            }
+            
             self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor(white: 0, alpha: offset)]
             self.title = app?.trackName
 
@@ -101,8 +125,10 @@ class DetailViewController: UICollectionViewController, UICollectionViewDelegate
     @objc func handleMakeOffer() {
         let layout = UICollectionViewFlowLayout()
         let view = MakeOfferController(collectionViewLayout: layout)
+        view.app = app
         let navController = UINavigationController(rootViewController: view)
-        UIApplication.shared.statusBarView?.isHidden = true
+        navController.modalPresentationStyle = .popover
+//        UIApplication.shared.statusBarView?.isHidden = true
         self.present(navController, animated: true, completion: nil)
         
     }
@@ -216,7 +242,7 @@ class ItemHeader: UICollectionReusableView, UICollectionViewDelegateFlowLayout, 
         cv.isPagingEnabled = true
         cv.layer.masksToBounds = true
         cv.isScrollEnabled = true
-        
+        cv.alwaysBounceVertical = false
         return cv
     }()
     

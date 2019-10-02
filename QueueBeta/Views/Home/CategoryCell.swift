@@ -26,6 +26,7 @@ class CategoryCell: UICollectionViewCell {
         addSubview(view)
         view.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: rightAnchor, paddingTop: 0, paddingLeft: 16, paddingBottom: 0, paddingRight: 16, width: 0, height: 0.25)
         addSubview(titleLabel)
+        titleLabel.textColor = .black
         titleLabel.noPaddingAnchor(top: view.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 8, left: 16, bottom: 0, right: 0))
         
         addSubview(horizontalController.view)

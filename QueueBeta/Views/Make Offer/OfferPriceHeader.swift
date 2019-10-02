@@ -9,6 +9,8 @@
 import UIKit
 
 class OfferPriceHeader: UICollectionReusableView {
+    var app: Result?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         let gradientLayer = CAGradientLayer()
@@ -25,7 +27,7 @@ class OfferPriceHeader: UICollectionReusableView {
     
     let offerPrice: UITextField = {
         let offer = UITextField()
-        offer.text = "360"
+        offer.text = ""
         offer.textColor = .white
         offer.textAlignment = .center
         offer.font = UIFont.boldSystemFont(ofSize: 36)
@@ -44,7 +46,6 @@ class OfferPriceHeader: UICollectionReusableView {
         addSubview(dividerView)
         addSubview(offerPrice)
         addSubview(dollarSign)
-        
         
         offerPrice.anchor(top: topAnchor, left: leftAnchor, bottom: dividerView.topAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
         dividerView.anchor(top: nil, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 20, paddingBottom: 40, paddingRight: 20, width: 0, height: 2)
